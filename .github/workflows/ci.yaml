@@ -1,0 +1,72 @@
+name: Mobile CI Pipeline
+
+on:
+  pull_request:
+
+jobs:
+  eslint:
+    name: Run ESLint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Sleep for 2 seconds
+        run: sleep 2
+      - name: Run ESLint
+        run: echo "✅ ESLint passed"
+
+  build-experimental-ios:
+    name: Experimental iOS Build
+    needs: eslint
+    runs-on: ubuntu-latest
+    environment: experimental_ios_build
+    steps:
+      - name: Dummy Build iOS (Experimental)
+        run: echo "🚧 Building Experimental iOS"
+      - name: Dummy Upload iOS (Experimental)
+        run: echo "📤 Uploading Experimental iOS build"
+
+  build-experimental-android:
+    name: Experimental Android Build
+    needs: eslint
+    runs-on: ubuntu-latest
+    environment: experimental_android_build
+    steps:
+      - name: Dummy Build Android (Experimental)
+        run: echo "🚧 Building Experimental Android"
+      - name: Dummy Upload Android (Experimental)
+        run: echo "📤 Uploading Experimental Android build"
+
+  build-official-ios:
+    name: Official iOS Build
+    needs: eslint
+    runs-on: ubuntu-latest
+    environment: official_ios_build
+    steps:
+      - name: Dummy Build iOS (Official)
+        run: echo "🏗️ Building Official iOS"
+
+  build-official-android:
+    name: Official Android Build
+    needs: eslint
+    runs-on: ubuntu-latest
+    environment: official_android_build
+    steps:
+      - name: Dummy Build Android (Official)
+        run: echo "🏗️ Building Official Android"
+
+  upload-official-ios:
+    name: Upload Official iOS
+    needs: build-official-ios
+    runs-on: ubuntu-latest
+    environment: upload_official_ios
+    steps:
+      - name: Dummy Upload iOS (Official)
+        run: echo "✅ Uploading Official iOS build"
+
+  upload-official-android:
+    name: Upload Official Android
+    needs: build-official-android
+    runs-on: ubuntu-latest
+    environment: upload_official_android
+    steps:
+      - name: Dummy Upload Android (Official)
+        run: echo "✅ Uploading Official Android build"
