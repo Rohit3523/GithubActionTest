@@ -1,4 +1,4 @@
-name: Mobile CI Pipeline with Hold Gates
+name: Full Mobile CI with Manual Gates
 
 on:
   pull_request:
@@ -10,98 +10,109 @@ jobs:
     steps:
       - name: Sleep for 2 seconds
         run: sleep 2
-      - name: Dummy ESLint
+      - name: Run ESLint
         run: echo "✅ ESLint Passed"
 
-  # iOS EXPERIMENTAL
   ios-hold-build-experimental:
+    name: Hold iOS Experimental Build
     needs: eslint
     runs-on: ubuntu-latest
-    environment: ios_hold_build_experimental
+    environment: experimental_ios_build
     steps:
-      - run: echo "🛑 Hold: iOS Experimental Build Approved"
+      - name: Approval
+        run: echo "🛑 Approved iOS Experimental Build"
 
   ios-build-experimental:
+    name: Build iOS Experimental
     needs: ios-hold-build-experimental
     runs-on: ubuntu-latest
     steps:
       - run: echo "🏗️ Building iOS Experimental"
 
   ios-upload-experimental:
+    name: Upload iOS Experimental
     needs: ios-build-experimental
     runs-on: ubuntu-latest
     steps:
       - run: echo "📤 Uploading iOS Experimental"
 
-  # iOS OFFICIAL
   ios-hold-build-official:
+    name: Hold iOS Official Build
     needs: eslint
     runs-on: ubuntu-latest
-    environment: ios_hold_build_official
+    environment: official_ios_build
     steps:
-      - run: echo "🛑 Hold: iOS Official Build Approved"
+      - run: echo "🛑 Approved iOS Official Build"
 
   ios-build-official:
+    name: Build iOS Official
     needs: ios-hold-build-official
     runs-on: ubuntu-latest
     steps:
       - run: echo "🏗️ Building iOS Official"
 
   ios-hold-upload-official:
+    name: Hold iOS Upload (Official)
     needs: ios-build-official
     runs-on: ubuntu-latest
-    environment: ios_hold_upload_official
+    environment: upload_official_ios
     steps:
-      - run: echo "🛑 Hold: iOS Upload Approved"
+      - run: echo "🛑 Approved iOS Upload"
 
   ios-upload-official:
+    name: Upload iOS Official
     needs: ios-hold-upload-official
     runs-on: ubuntu-latest
     steps:
       - run: echo "🚀 Uploaded iOS Official"
 
-  # ANDROID EXPERIMENTAL
   android-hold-build-experimental:
+    name: Hold Android Experimental Build
     needs: eslint
     runs-on: ubuntu-latest
-    environment: android_hold_build_experimental
+    environment: experimental_android_build
     steps:
-      - run: echo "🛑 Hold: Android Experimental Build Approved"
+      - run: echo "🛑 Approved Android Experimental Build"
 
   android-build-experimental:
+    name: Build Android Experimental
     needs: android-hold-build-experimental
     runs-on: ubuntu-latest
     steps:
       - run: echo "🏗️ Building Android Experimental"
 
   android-upload-experimental:
+    name: Upload Android Experimental
     needs: android-build-experimental
     runs-on: ubuntu-latest
     steps:
       - run: echo "📤 Uploading Android Experimental"
 
-  # ANDROID OFFICIAL
   android-hold-build-official:
+    name: Hold Android Official Build
     needs: eslint
     runs-on: ubuntu-latest
-    environment: android_hold_build_official
+    environment: official_android_build
     steps:
-      - run: echo "🛑 Hold: Android Official Build Approved"
+      - run: echo "🛑 Approved Android Official Build"
 
   android-build-official:
+    name: Build Android Official
     needs: android-hold-build-official
     runs-on: ubuntu-latest
     steps:
       - run: echo "🏗️ Building Android Official"
 
   android-hold-upload-official:
+    name: Hold Android Upload (Official)
     needs: android-build-official
     runs-on: ubuntu-latest
-    environment: android_hold_upload_official
+    environment: upload_official_android
     steps:
-      - run: echo "🛑 Hold: Android Upload Approved"
+      - run: echo "🛑 Approved Android Upload"
 
   android-upload-official:
+    name: Upload Android Official
     needs: android-hold-upload-official
     runs-on: ubuntu-latest
     steps:
